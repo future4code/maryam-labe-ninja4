@@ -1,7 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
-
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    min-height: 100vh;
+  }
+  `
 
 const HeaderContainer = styled.div` 
 	height: 15vh;
@@ -12,7 +20,7 @@ const HeaderContainer = styled.div`
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	border-radius: 5px;
+	margin: 0px;
 `
 const ButtonContainer = styled.div` 
     display: flex;
@@ -41,6 +49,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
+		  <GlobalStyle />
 		  <HeaderContainer>
         	<h2>LabeNinjas</h2>
 

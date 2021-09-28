@@ -1,6 +1,7 @@
 ## Planejamentos do projeto LabeNinjas  
   
-link do PDF:  
+link do PDF:  [LabeNinjas.drawio.pdf](https://github.com/future4code/maryam-labe-ninja4/files/7247183/LabeNinjas.drawio.pdf)
+
 
 **O que foi feito?**  
 -Fizemos um header contendo o nome da loja e dois botões, um que leva para o carrinho e outro que volta para a home  

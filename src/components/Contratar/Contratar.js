@@ -31,7 +31,9 @@ export default class Contratar extends React.Component{
             </select>
            
         </AlinhaInputs>
-        <Card />
+        <Card 
+         irParaDetalhes = {this.props.irParaDetalhes}
+        />
         </div>
           
         )

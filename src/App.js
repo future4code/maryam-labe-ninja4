@@ -5,6 +5,7 @@ import Home from './components/Home/Home';
 import Cadastro from './components/Cadastro/Cadastro';
 import Contratar from './components/Contratar/Contratar';
 import Carrinho from './components/Carrinho/Carrinho';
+import Detalhes from './components/Detalhes/Detalhes';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -45,11 +46,13 @@ export default class App extends React.Component {
 	state = {
 		paginaAtual: "HOME",
 	}
-	irPara = () =>{
+
+	irParaCarrinho= () =>{
 		this.setState({paginaAtual: "CARRINHO"})
 	}
-	irParaCarrinho = () =>{
-		this.setState({paginaAtual: "CARRINHO"})
+
+	irParaDetalhes = () =>{
+		this.setState({paginaAtual: "DETALHES"})
 	}
 
 	irParaContratar = () =>{
@@ -73,9 +76,17 @@ export default class App extends React.Component {
 			case "CADASTRO":
 				return <Cadastro />
 			case "CONTRATAR":
-				return <Contratar />
+				return <Contratar
+				irParaDetalhes = {this.irParaDetalhes}
+				/>
 			case "CARRINHO":
-				return <Carrinho />
+				return <Carrinho 
+				irParaContratar = {this.irParaContratar}
+				/>
+			case "DETALHES":
+				return <Detalhes
+				irParaContratar = {this.irParaContratar}
+				 />	
 					
 			default:
 			  return <div>"página não encontrada"</div>	

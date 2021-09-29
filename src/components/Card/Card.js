@@ -30,7 +30,7 @@ export default class Card extends React.Component{
                 <h4>Preço: </h4>
                 <h4>Prazo: </h4>
                 <div>
-                    <button>Ver Detalhes</button>
+                    <button onClick={()=> {this.props.irParaDetalhes()}}>Ver Detalhes</button>
                     <button>Add ao Carrinho</button>
                 </div>
             </DivCard>

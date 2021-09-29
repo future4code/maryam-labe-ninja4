@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
+import Home from './components/Home/Home';
+import Cadastro from './components/Cadastro/Cadastro';
+import Contratar from './components/Contratar/Contratar';
+import Carrinho from './components/Carrinho/Carrinho';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -31,20 +35,52 @@ const ButtonContainer = styled.div`
 	border-radius:15px;
 	margin: 25px;
 	padding: 10px 45px;
-`
-
-const BodyContainer = styled.div` 
-	width: 100vw;
-	height: 30vh;
-	display:flex;
-	flex-direction: column;
-	align-items:center;
-	justify-content: center;
-	margin-top: 40px;
+	button{
+		margin: 6px
+	}
 `
 
 
 export default class App extends React.Component {
+	state = {
+		paginaAtual: "HOME",
+	}
+	irPara = () =>{
+		this.setState({paginaAtual: "CARRINHO"})
+	}
+	irParaCarrinho = () =>{
+		this.setState({paginaAtual: "CARRINHO"})
+	}
+
+	irParaContratar = () =>{
+		this.setState({paginaAtual: "CONTRATAR"})
+	}
+	
+	irParaHome = () =>{
+		this.setState({paginaAtual: "HOME"})
+	}
+	
+	irParaCadastro = () =>{
+		this.setState({paginaAtual: "CADASTRO"})
+	}
+	
+    atualizaPagina =()=>{
+		switch (this.state.paginaAtual) {
+			case "HOME":
+				return <Home 
+					irParaCadastro = {this.irParaCadastro}
+					irParaContratar = {this.irParaContratar}/>
+			case "CADASTRO":
+				return <Cadastro />
+			case "CONTRATAR":
+				return <Contratar />
+			case "CARRINHO":
+				return <Carrinho />
+					
+			default:
+			  return <div>"página não encontrada"</div>	
+		}
+	}
 
   render() {
     return (
@@ -54,23 +90,14 @@ export default class App extends React.Component {
         	<h2>LabeNinjas</h2>
 
 			<ButtonContainer>
-				<button>Home</button>
-				<button>Carrinho</button>
+				<button onClick={()=>{this.irParaHome()}}>Home</button>
+				<button onClick={()=>{this.irParaCarrinho()}}>Carrinho</button>
 			</ButtonContainer>
 
       </HeaderContainer>
 
 	  <div>
-		  	<BodyContainer>
-		  <h1>LabeNinjas</h1>
-		  <h3>Para quem é ou para quem procura!</h3>
-		  <div>
-			
-			  <button>Quero ser um Ninja!</button>
-			  <button>Quero contratar um Ninja!</button>
-				
-			</div>
-			</BodyContainer>
+		{this.atualizaPagina()}
 	  </div>
 	  </div>
     )

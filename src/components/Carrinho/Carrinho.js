@@ -25,7 +25,7 @@ export default class Carrinho extends React.Component{
                 <p>Valor Total: R$ </p>
                 <div>
                 <button>Finalizar Compra</button>
-                <button>Voltar a Lista</button>
+                <button onClick={()=>{this.props.irParaContratar()}}>Voltar a Lista</button>
                 </div>
             </DadosDoCarrinho>
         )

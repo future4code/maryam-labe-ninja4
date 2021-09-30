@@ -11,7 +11,7 @@ export default class Detalhes extends React.Component{
               <h4>Prazo:</h4>
               <p>Descrição do serviço</p>
               <p>formas de pagamento</p>
-              <button>Valtar para lista</button>
+              <button onClick={()=> {this.props.irParaContratar()}}>Valtar para lista</button>
             </div>
         )
     }

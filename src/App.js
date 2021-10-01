@@ -6,6 +6,7 @@ import Cadastro from './components/Cadastro/Cadastro';
 import Contratar from './components/Contratar/Contratar';
 import Carrinho from './components/Carrinho/Carrinho';
 import Detalhes from './components/Detalhes/Detalhes';
+import axios from 'axios';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -46,7 +47,8 @@ export default class App extends React.Component {
 	state = {
 		paginaAtual: "HOME",
 	}
-
+	
+	
 	irParaCarrinho= () =>{
 		this.setState({paginaAtual: "CARRINHO"})
 	}

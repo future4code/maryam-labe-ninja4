@@ -23,12 +23,19 @@ div{
 `
 
 export default class Card extends React.Component{
+     convertDate = (prazo) => {
+        const dia = prazo.substring(8, 10)
+        const mes = prazo.substring(5, 7)
+        const ano = prazo.substring(0, 4)
+        return `${dia}/${mes}/${ano}`
+    }
+    
     render(){
         return(
             <DivCard>
-                <h2>Título</h2>
-                <h4>Preço: </h4>
-                <h4>Prazo: </h4>
+                <h2>{this.props.titulo}</h2>
+                <h4>Preço: R${this.props.preco} </h4>
+                <h4>Prazo:{this.convertDate(this.props.prazo)} </h4>
                 <div>
                     <button onClick={()=> {this.props.irParaDetalhes()}}>Ver Detalhes</button>
                     <button>Add ao Carrinho</button>

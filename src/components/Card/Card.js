@@ -4,10 +4,11 @@ import styled from 'styled-components'
 const DivCard = styled.div`
 display: flex;
 flex-direction: column;
-border: solid black 1px;
+border: black 1px;
 width: 20vw;
-margin: 30px;
 padding: 15px;
+background-color: #F0E68C;
+border: ridge;
 
 h2{
     display: flex;
@@ -32,13 +33,14 @@ export default class Card extends React.Component{
     
     render(){
         return(
+
             <DivCard>
                 <h2>{this.props.titulo}</h2>
-                <h4>Preço: R${this.props.preco} </h4>
+                <h4>Preço: R$ {this.props.preco},00 </h4>
                 <h4>Prazo:{this.convertDate(this.props.prazo)} </h4>
                 <div>
-                    <button onClick={()=> {this.props.irParaDetalhes()}}>Ver Detalhes</button>
-                    <button>Add ao Carrinho</button>
+                    <button onClick={()=> {this.props.irParaDetalhes(this.props.servico.id)}}>Ver Detalhes</button>
+                    <button onClick={()=>{this.props.adicionaAoCarrinho(this.props.servico)}}>Add ao Carrinho</button>
                 </div>
             </DivCard>
         )

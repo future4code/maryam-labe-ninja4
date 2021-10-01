@@ -2,7 +2,7 @@ import Axios from 'axios';
 import React from 'react';
 import styled from 'styled-components'
 import Card from '../Card/Card';
-import axios from 'axios';
+
 
 const AlinhaInputs = styled.div`
 display: flex;
@@ -19,6 +19,11 @@ select{
 const AlinharCards = styled.div`
 display: grid;
 grid-template-columns: repeat(4, 1fr);
+gap: 30px;
+`
+const TelaComOsCards = styled.div`
+display: flex;
+justify-content: center;
 `
 export default class Contratar extends React.Component {
     state = {
@@ -43,10 +48,13 @@ export default class Contratar extends React.Component {
         const servicos = this.state.listaDeServico.map((servico) => {
             return <Card
                 key={servico.id}
+                servico = {servico}
                 irParaDetalhes={this.props.irParaDetalhes}
+                adicionaAoCarrinho = {this.props.adicionaAoCarrinho}
                 titulo={servico.title}
                 preco={servico.price}
                 prazo={servico.dueDate}
+                
             ></Card>
 
         })
@@ -64,9 +72,11 @@ export default class Contratar extends React.Component {
                 </select>
 
             </AlinhaInputs>
+            <TelaComOsCards>
                 <AlinharCards>
                     {servicos}
                 </AlinharCards>
+            </TelaComOsCards>
             </div>
 
         )

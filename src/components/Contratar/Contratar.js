@@ -14,7 +14,10 @@ input {
 select{
     width: 20vw;
 }
-
+`
+const AlinharCards = styled.div`
+display: grid;
+grid-template-columns: repeat(4, 1fr);
 `
 export default class Contratar extends React.Component {
     state = {
@@ -37,14 +40,14 @@ export default class Contratar extends React.Component {
     }
     render() {
         const servicos = this.state.listaDeServico.map((servico) => {
-            return <Card 
-            key={servico.id}
-            irParaDetalhes={this.props.irParaDetalhes}
-             titulo = {servico.title}
-             preco = {servico.price}
-             prazo = {servico.dueDate}
-             ></Card>
-            
+            return <Card
+                key={servico.id}
+                irParaDetalhes={this.props.irParaDetalhes}
+                titulo={servico.title}
+                preco={servico.price}
+                prazo={servico.dueDate}
+            ></Card>
+
         })
         return (
             <div>  <AlinhaInputs>
@@ -60,7 +63,9 @@ export default class Contratar extends React.Component {
                 </select>
 
             </AlinhaInputs>
-            {servicos}
+                <AlinharCards>
+                    {servicos}
+                </AlinharCards>
             </div>
 
         )

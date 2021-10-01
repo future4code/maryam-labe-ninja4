@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React from 'react';
 import styled from 'styled-components'
 import Card from '../Card/Card';
+import axios from 'axios';
 
 const AlinhaInputs = styled.div`
 display: flex;

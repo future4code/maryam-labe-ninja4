@@ -27,11 +27,41 @@ justify-content: center;
 `
 export default class Contratar extends React.Component {
     state = {
-        listaDeServico: []
+        listaDeServico: [],
+        listaDeServicoFiltrada: [],
+        valorMin: "",
+        valorMax: "",
+        buscar: "",
+        ordem: ""
     }
     componentDidMount() {
         this.pegarTrabalhos()
+        this.filtroDosServicos()
     }
+    componentDidUpdate(prevProps, prevState){
+        if(
+            this.state.valorMin !==prevState.valorMin ||
+            this.state.valorMax !==prevState.valorMax ||
+            this.state.buscar !==prevState.buscar ||
+            this.state.ordem !==prevState.ordem
+        ){
+            this.filtroDosServicos()
+        }
+    }
+
+    atualizarValorMin = (e) =>{
+        this.setState({valorMin: e.target.value})
+    }
+    atualizarValorMax = (e) =>{
+        this.setState({valorMax: e.target.value})
+    }
+    atualizarBuscar = (e) =>{
+        this.setState({buscar: e.target.value})
+    }
+    atualizarOrdem = (e) =>{
+        this.setState({ordem: e.target.value})
+    }
+    
     pegarTrabalhos = () => {
         const url = "https://labeninjas.herokuapp.com/jobs"
         Axios.get(url, {
@@ -39,13 +69,39 @@ export default class Contratar extends React.Component {
                 { Authorization: 'f161317b-aa18-403f-a7f7-9979a6fed987' }
         }).then((res) => {
             console.log(res.data.jobs)
-            this.setState({ listaDeServico: res.data.jobs })
+            this.setState({ listaDeServico: res.data.jobs, listaDeServicoFiltrada: res.data.jobs })
         }).catch((err) => {
             console.log(err)
         })
     }
+    filtroDosServicos= () =>{
+        const minimo = this.state.valorMin ? Number(this.state.valorMin) : -Infinity
+        const maximo = this.state.valorMax ? Number(this.state.valorMax) : Infinity
+
+        const novaListaDeServicos = this.state.listaDeServico
+        .filter((servico) => servico.price >= minimo)
+        .filter((servico)=> servico.price <= maximo)
+        .filter((servico)=> {
+            const tituloDoServico = servico.title.toLowerCase()
+            const descricaoDoServico = servico.description.toLowerCase()
+            const textoDaBusca = this.state.buscar.toLocaleLowerCase()
+            return tituloDoServico.includes(textoDaBusca) || descricaoDoServico.includes(textoDaBusca)
+        }).sort((a, b)=>{
+            switch (this.state.ordem){
+                case "Menor Valor":
+                    return a.price - b.price
+                case "Maior Valor":
+                    return b.price - a.price 
+                case "Título":
+                    return a.title.localeCompare(b.title)
+                case "Prazo":
+                    return a.dueDate.localeCompare(b.dueDate)
+            }
+        })
+        this.setState({listaDeServicoFiltrada: novaListaDeServicos})
+    }
     render() {
-        const servicos = this.state.listaDeServico.map((servico) => {
+        const servicos = this.state.listaDeServicoFiltrada.map((servico) => {
             return <Card
                 key={servico.id}
                 servico = {servico}
@@ -60,10 +116,10 @@ export default class Contratar extends React.Component {
         })
         return (
             <div>  <AlinhaInputs>
-                <input placeholder="Valor Mínimo"></input>
-                <input placeholder="Valor Máximo"></input>
-                <input placeholder="busca por título ou descrição"></input>
-                <select>
+                <input value={this.state.valorMin} onChange={this.atualizarValorMin} placeholder="Valor Mínimo"></input>
+                <input value={this.state.valorMax} onChange={this.atualizarValorMax} placeholder="Valor Máximo"></input>
+                <input value={this.state.buscar} onChange={this.atualizarBuscar} placeholder="busca por título ou descrição"></input>
+                <select value={this.state.ordem} onChange={this.atualizarOrdem}>
                     <option>Sem Ordenação</option>
                     <option>Menor Valor</option>
                     <option>Maior Valor</option>

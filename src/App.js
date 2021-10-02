@@ -49,80 +49,98 @@ export default class App extends React.Component {
 		detalhesDoServico: "",
 		carrinho: []
 	}
-	
-	adicionaAoCarrinho = (servico) =>{
+
+	removeCardDoCarrinho = (id) => {
+		const deletarCard = window.confirm("Tem certeza que deseja remover este produto?")
+		if (deletarCard) {
+			const novoCard = this.state.carrinho.filter((carrinhoItem) => {
+				return carrinhoItem.id !== id
+			})
+			this.setState({ carrinho: novoCard })
+
+		}
+	}
+
+	limparCarrinho = () => {
+		this.setState({ carrinho: [] })
+		alert("obrigado por comprar conosco!")
+	}
+
+	adicionaAoCarrinho = (servico) => {
 		const novoCarrinho = [...this.state.carrinho, servico]
-		this.setState({carrinho: novoCarrinho})
+		this.setState({ carrinho: novoCarrinho })
 		alert(`O serviço ${servico.title} foi adicionado ao carrinho.`)
 	}
-	
-	irParaCarrinho= () =>{
-		this.setState({paginaAtual: "CARRINHO"})
+
+	irParaCarrinho = () => {
+		this.setState({ paginaAtual: "CARRINHO" })
 	}
 
-	irParaDetalhes = (servicoId) =>{
-		this.setState({paginaAtual: "DETALHES", detalhesDoServico: servicoId})
+	irParaDetalhes = (servicoId) => {
+		this.setState({ paginaAtual: "DETALHES", detalhesDoServico: servicoId })
 	}
 
-	irParaContratar = () =>{
-		this.setState({paginaAtual: "CONTRATAR"})
+	irParaContratar = () => {
+		this.setState({ paginaAtual: "CONTRATAR" })
 	}
-	
-	irParaHome = () =>{
-		this.setState({paginaAtual: "HOME"})
+
+	irParaHome = () => {
+		this.setState({ paginaAtual: "HOME" })
 	}
-	
-	irParaCadastro = () =>{
-		this.setState({paginaAtual: "CADASTRO"})
+
+	irParaCadastro = () => {
+		this.setState({ paginaAtual: "CADASTRO" })
 	}
-	
-    atualizaPagina =()=>{
+
+	atualizaPagina = () => {
 		switch (this.state.paginaAtual) {
 			case "HOME":
-				return <Home 
-					irParaCadastro = {this.irParaCadastro}
-					irParaContratar = {this.irParaContratar}/>
+				return <Home
+					irParaCadastro={this.irParaCadastro}
+					irParaContratar={this.irParaContratar} />
 			case "CADASTRO":
 				return <Cadastro />
 			case "CONTRATAR":
 				return <Contratar
-				irParaDetalhes = {this.irParaDetalhes}
-				adicionaAoCarrinho = {this.adicionaAoCarrinho}
+					irParaDetalhes={this.irParaDetalhes}
+					adicionaAoCarrinho={this.adicionaAoCarrinho}
 				/>
 			case "CARRINHO":
-				return <Carrinho 
-				irParaContratar = {this.irParaContratar}
-				carrinho = {this.state.carrinho}
+				return <Carrinho
+					irParaContratar={this.irParaContratar}
+					carrinho={this.state.carrinho}
+					limparCarrinho={this.limparCarrinho}
+					removeCardDoCarrinho={this.removeCardDoCarrinho}
 				/>
 			case "DETALHES":
 				return <Detalhes
-				irParaContratar = {this.irParaContratar}
-				servicoId = {this.state.detalhesDoServico}
-				 />	
-					
+					irParaContratar={this.irParaContratar}
+					servicoId={this.state.detalhesDoServico}
+				/>
+
 			default:
-			  return <div>"página não encontrada"</div>	
+				return <div>"página não encontrada"</div>
 		}
 	}
 
-  render() {
-    return (
-      <div>
-		  <GlobalStyle />
-		  <HeaderContainer>
-        	<h2>LabeNinjas</h2>
+	render() {
+		return (
+			<div>
+				<GlobalStyle />
+				<HeaderContainer>
+					<h2>LabeNinjas</h2>
 
-			<ButtonContainer>
-				<button onClick={()=>{this.irParaHome()}}>Home</button>
-				<button onClick={()=>{this.irParaCarrinho()}}>Carrinho</button>
-			</ButtonContainer>
+					<ButtonContainer>
+						<button onClick={() => { this.irParaHome() }}>Home</button>
+						<button onClick={() => { this.irParaCarrinho() }}>Carrinho</button>
+					</ButtonContainer>
 
-      </HeaderContainer>
+				</HeaderContainer>
 
-	  <div>
-		{this.atualizaPagina()}
-	  </div>
-	  </div>
-    )
-  }
+				<div>
+					{this.atualizaPagina()}
+				</div>
+			</div>
+		)
+	}
 }
